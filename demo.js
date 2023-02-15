@@ -14,26 +14,22 @@ function startConnect(){
 
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
+    client.onConnect = onConnect;
+    client.useSSL;
 
     client.connect({
-        onSuccess: onConnect
-//        userName: userId,
- //       passwordId: passwordId
+        onSuccess: onConnect,
+        useSSL: true,
+        userName: userId,
+        password: passwordId
     });
-
-
 }
-
 
 function onConnect(){
     topic =  document.getElementById("topic_s").value;
-
     document.getElementById("messages").innerHTML += "<span> Subscribing to topic "+topic + "</span><br>";
-
-    client.subscribe(topic);
+    client.subscribe(topic, {qos:0});
 }
-
-
 
 function onConnectionLost(responseObject){
     document.getElementById("messages").innerHTML += "<span> ERROR: Connection is lost.</span><br>";
@@ -43,17 +39,19 @@ function onConnectionLost(responseObject){
 }
 
 function onMessageArrived(message){
-    console.log("OnMessageArrived: "+message.payloadString);
-    document.getElementById("messages").innerHTML += "<span> Topic:"+message.destinationName+"| Message : "+message.payloadString + "</span><br>";
+    if(message.destinationName == "pic"){
+        console.log("picture OnMessageArrived: ");
+        document.getElementById("image").src = "data:image/png;base64," + message.payloadString;
+    }
+    else{
+        console.log("OnMessageArrived: "+message.payloadString);
+        document.getElementById("messages").innerHTML += "<span> Topic:"+message.destinationName+"| Message : "+message.payloadString + "</span><br>";
+    }
 }
 
 function startDisconnect(){
     client.disconnect();
     document.getElementById("messages").innerHTML += "<span> Disconnected. </span><br>";
-
-
-
-
 }
 
 function publishMessage(){
@@ -65,6 +63,5 @@ Message.destinationName = topic;
 
 client.send(Message);
 document.getElementById("messages").innerHTML += "<span> Message to topic "+topic+" is sent </span><br>";
-
 
 }

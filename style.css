@@ -17,18 +17,18 @@ input {
     box-sizing: border-box;
 }
 input[type=text] {
-  width:100%;
+  width:33%;
     padding: 12px 12px;
         height: 10px;
 
     margin: 8px 0;
 }
 input[type=password] {
-  width:100%;
+  width:33%;
     padding: 12px 12px;
         height: 10px;
 
-    margin: 4px 2px;
+    margin: 4px 0px;
 }
 input[type=button] {
     background-color: gray;
@@ -67,4 +67,16 @@ input[type=button]:hover {
 #messages span {
     overflow-y: scroll;
     overflow: scroll;
+}
+#image {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    width:300px;
+    height:200px;
+    display: inline-block;
+    border:1px solid black;
+    
 }
